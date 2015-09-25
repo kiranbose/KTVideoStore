@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html ng-app="ktVideoApp">
+
+<head>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/angular.min.js"></script>
+    <script src="./js/ui-bootstrap-tpls-0.13.4.min.js"></script>
+</head>
+
+<body ng-controller="MainController">
+
+    <!-- Fixed navBar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header ">
+                <ul class="nav navbar-nav navbar-left brand ">
+                    <li><img id="logo" class="navbar-brand domoLogo" src="./img/BrandLogo.png" href="#"></li>
+                    <!--            <li><hr class="vertical"/></li>-->
+                    <!--            <li><a class="navbar-brand" href="#" >{{applicationName}}</a></li>-->
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div id="videoSec" class="container-fluid"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container-fluid col-md-12">
+                    
+                <!-- video player div -->
+                <div id="videoplayerid" class="row videosection" ng-show="playingVideo">
+                    <div class="col-large-12 backimage">
+                        <div class="text-center videoplayer" ng-model="playingVideo">
+<!--                            <video height="480" width="750" controls src="https://microsoft.sharepoint.com/teams/MBSDomoFC/Program%20Governance%20Docs/Transition/Support%20Transition%20Offshore/Over%20View%20of%20DBC/Support%20Transition%20KT%20Recordings/Different%20states%20of%20Opportunities%20related%20issues.mp4"></video>-->
+                            <video height="480" width="750" controls src=""></video>
+                            <h4 style="overflow:hidden" ng-show="playingVideo.VideoName">{{playingVideo.VideoName | limitTo: 50}}</h4>
+                            <p style="overflow:hidden" ng-show="playingVideo.VideoCategory">{{playingVideoplayingVideo.VideoCategory | limitTo: 20}}</p>
+                            <h6 style="overflow:hidden" ng-show="playingVideo.PresentedBy" class="clickMe">by {{playingVideo.PresentedBy | limitTo: 20}}</h6>
+                            <h6 style="overflow:hidden" ng-show="playingVideo.CreatedDate">on {{playingVideo.CreatedDate | date}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end of video player div -->
+
+                <div class="row">
+                    <div class="col-large-12">
+                        <div class="text-center grad">
+                            <div class="bottom-aligned-text">
+                                <span id="font-white">Search for any video from our library</span>
+                                <br/>
+                                <div id="custom-search-input">
+                                    <div class="input-group col-md-12">
+                                        <input type="text" class="form-control input-lg" placeholder="Search here" ng-model="searchText" />
+                                        <span class="input-group-btn">
+                                  <button class="btn btn-info btn-lg" type="button" ng-click="search(searchText)">
+                                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+
+                    <div class="row AllVideos">
+                        <h3>All videos</h3>
+                        <hr>
+                        <div class="col-md-2 col-large-2 col-sm-4 text-center" ng-repeat="video in filteredVideos" ng-class="{active : isSelected(section)}">
+                            <div id="contentpanel" class="panel panel-default" ng-init="getAll()">
+                                <div class="panel-heading" style="height:120px;">
+                                    <!-- <iframe width="180" height="180" ng-src="{{video.VideoURL}}" frameborder="0" allowfullscreen controls></iframe> -->
+                                    <!-- <video height="500" width="180"  class="img-thumbnail" ng-src="{{video.VideoURL}}" controls ></video> -->
+                                    <span class="col-md-12 col-xs-12 img-rounded container  text-center videothumbnail">
+                          <span class="glyphicon glyphicon-play-circle playicon center-block" ng-click="playVideo(video)"></span>
+                                    </span>
+                                </div>
+                                <div class="panel-body" style="margin-top:-12px;">
+                                    <h4 style="overflow:hidden" ng-show="video.VideoName">{{video.VideoName | limitTo: 50}}</h4>
+                                    <p style="overflow:hidden" ng-show="video.VideoCategory">{{video.VideoCategory | limitTo: 20}}</p>
+                                    <h6 style="overflow:hidden" ng-show="video.PresentedBy" class="clickMe">by {{video.PresentedBy | limitTo: 20}}</h6>
+                                    <h6 style="overflow:hidden" ng-show="video.CreatedDate">on {{video.CreatedDate | date}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    <div class="row">
+<!--                        <div class="container col-md-8" style="height:100px;">-->
+                        <pagination ng-model="currentPage" total-items="totalItems" max-size="maxSize" items-per-page="numPerPage">
+                        </pagination>
+                        <h4>{{totalItems}}</h4>
+                        <h4>{{maxSize}}</h4>
+<!--                        </div>-->
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="root">
+        <!-- <video height="480" width="640" controls src="https://microsoft.sharepoint.com/teams/MBSDomoFC/Program%20Governance%20Docs/Transition/Support%20Transition%20Offshore/Over%20View%20of%20DBC/Support%20Transition%20KT%20Recordings/Different%20states%20of%20Opportunities%20related%20issues.mp4"></video> -->
+    </div>
+    <footer class="text-center" style="background:transparent">
+        <div class="footer-above">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="footer-below" style="background-color:lightgray;min-height:30px; bottom:0">
+            <br>
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="col-md-4 col-sm-6" style="float:left">
+                        <font color="black">Copyright &copy; Accenture 2015. ALL RIGHTS RESERVED</font>
+                    </div>
+                    <div class="col-md-4 "> </div>
+                    <div class="col-md-4 col-sm-6">
+                        <font color="black">POWERED BY: DOMO</font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/script.js"></script>
+
+</body>
+
+</html>
