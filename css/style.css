@@ -71,7 +71,6 @@ ul.nav a:hover { background-color: white !important; }
 ul.nav img:hover { background-color: transparent !important; }
 
 
-
 #font-white{
 	color:white !important;
 }
@@ -104,9 +103,9 @@ span{
 /**********************************************************/
 
 .grad {
-  background: linear-gradient(black, black);
+  background: black;
 	height:200px;
-	width:100%;
+/*	width:100%;*/
 } 
 
 
@@ -162,7 +161,7 @@ span{
 
 h3{
     font-family: Segoe UI;
-    color:darkgray;
+    color:dimgray;
 }
 
 h6{
@@ -210,6 +209,13 @@ float: right!important;
           padding-left: 20px;
           padding-right: 20px;
         }
+        #logo.domoLogoMin{
+            margin-top: -10px;
+            height: 55px !important;
+            width: 200px !important;
+            padding: 5px !important;
+        }
+
       }
 
 footer {
@@ -223,8 +229,13 @@ footer {
 
 .videosection{
     position: relative;
-     background: radial-gradient(gray, white, darkgray);
-     height: 600px;
+     background: radial-gradient(gray, white, gray);
+    
+    height: 90%;
+    width: 100%;
+    
+/*     height: 600px;*/
+    padding: 20px;
     -webkit-transition:top linear 1.5s;
     transition:top linear 1.5s;
      top: 0;    
@@ -239,11 +250,6 @@ footer {
 }
 
 
-/*
-#videoplayerid.scale{
-        height: 600px;
-}
-*/
 
 /*
 .backimage{
@@ -298,13 +304,48 @@ p{
 }
 
 
-
-
-
-
-
+#videoId{
+    position: relative;
+    height: 90%;
+    width: 60%;
+}
 
 
 
 
 /****************ng animate ********************/
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    -ms-animation: spin2 .7s infinite linear;
+    -moz-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);
+        }
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-ms-keyframes spin2 {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+    }
+}
+    
+@-moz-keyframes spin2 {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+    
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
