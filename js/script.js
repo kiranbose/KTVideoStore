@@ -5,7 +5,7 @@
     // http://capacityplan.azurewebsites.net/api/tblKTVideos/
     var connectionString = "http://capacityplan.azurewebsites.net/api/tblKTVideos/";
 
-    var MainController = function ($scope, $http) {
+    var MainController = function ($scope, $http, $log) {
 
         $scope.headingText = "All Videos";
 
@@ -56,7 +56,6 @@
                     'slow');
         };
 
-
         $scope.$watch('currentPage + numPerPage + flag', function () {
             if (typeof ($scope.videos) != 'undefined') {
                 var begin = (($scope.currentPage - 1) * $scope.numPerPage),
@@ -67,10 +66,23 @@
         });
 
         $scope.applicationName = "KTVideo Store";
+        
+        var addedViewCount = function(response){
+            $log.log("Video view count added for " + $scope.playingVideo.VideoName);   
+        }
+        
+        var failAddVewCount = function(response){
+            $log.log("Add view count failed, reason : " + response.data);   
+        }
+        
+        var addvideoCount = function(obj){
+            $http.get(connectionString + "addviewcount/" + obj.VideoID).then(addedViewCount, failAddVewCount);
+        }
 
         $scope.playVideo = function (obj, $event) {
             //          console.log(obj);
             $scope.playingVideo = obj;
+            addvideoCount(obj);
             $('html,body').animate({
                 scrollTop: 0
             }, 'fast');
@@ -114,12 +126,13 @@
         }
 
     };
-    app.controller("MainController", ["$scope", "$http", MainController]);
+    app.controller("MainController", ["$scope", "$http", "$log", MainController]);
 }());
 
-$("#videoId").on("loadstart", function (e) {
-    console.debug("Video startedplaying. Current time of videoplay: " + e.target.currentTime);
-});
+////on video load start
+//$("#videoId").on("loadstart", function (e) {
+//    console.debug("Video startedplaying. Current time of videoplay: " + e.target.currentTime);
+//});
 
 $(window).scroll(function () {
     if ($(this).scrollTop() > 1) {
